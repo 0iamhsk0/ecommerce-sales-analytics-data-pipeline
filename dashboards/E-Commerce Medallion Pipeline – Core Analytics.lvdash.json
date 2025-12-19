@@ -1,0 +1,261 @@
+{
+  "datasets": [
+    {
+      "name": "67f541e2",
+      "displayName": "fact_transactions_denorm",
+      "queryLines": [
+        "SELECT * FROM ecommerce.gold.fact_transactions_denorm"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "f8fe971c",
+      "displayName": "Sales",
+      "layout": [
+        {
+          "widget": {
+            "name": "7c3fa516",
+            "multilineTextboxSpec": {
+              "lines": [
+                "## Sales Insights"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "74ebc2f4",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "67f541e2",
+                  "fields": [
+                    {
+                      "name": "monthly(transaction_date)",
+                      "expression": "DATE_TRUNC(\"MONTH\", `transaction_date`)"
+                    },
+                    {
+                      "name": "sum(net_amount)",
+                      "expression": "SUM(`net_amount`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "monthly(transaction_date)",
+                  "displayName": "Month",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(net_amount)",
+                  "displayName": "Net Amount",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "frame": {
+                "title": "Monthly Sales Trend",
+                "showTitle": true
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 1,
+            "width": 3,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "b6f3442d",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "67f541e2",
+                  "fields": [
+                    {
+                      "name": "category_name",
+                      "expression": "`category_name`"
+                    },
+                    {
+                      "name": "sum(net_amount)",
+                      "expression": "SUM(`net_amount`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "category_name",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "y-reversed"
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(net_amount)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "frame": {
+                "title": "Net amount by category",
+                "showTitle": true
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 1,
+            "width": 3,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "5bc60401",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "67f541e2",
+                  "fields": [
+                    {
+                      "name": "sum(net_amount)",
+                      "expression": "SUM(`net_amount`)"
+                    },
+                    {
+                      "name": "hour_of_day",
+                      "expression": "`hour_of_day`"
+                    },
+                    {
+                      "name": "day_name",
+                      "expression": "`day_name`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "heatmap",
+              "encodings": {
+                "x": {
+                  "fieldName": "hour_of_day",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "day_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "color": {
+                  "fieldName": "sum(net_amount)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 7,
+            "width": 6,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    },
+    {
+      "name": "6c3e6727",
+      "displayName": "Global Filters",
+      "layout": [
+        {
+          "widget": {
+            "name": "4c4c3d31",
+            "queries": [
+              {
+                "name": "dashboards/01f0db7676291bfabb2c5add61252f1a/datasets/01f0db76a3621d19aecfb4f8928ec03b_category_name",
+                "query": {
+                  "datasetName": "67f541e2",
+                  "fields": [
+                    {
+                      "name": "category_name",
+                      "expression": "`category_name`"
+                    },
+                    {
+                      "name": "category_name_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "category_name",
+                    "queryName": "dashboards/01f0db7676291bfabb2c5add61252f1a/datasets/01f0db76a3621d19aecfb4f8928ec03b_category_name"
+                  }
+                ]
+              },
+              "frame": {
+                "showTitle": true
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 2
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_GLOBAL_FILTERS"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}

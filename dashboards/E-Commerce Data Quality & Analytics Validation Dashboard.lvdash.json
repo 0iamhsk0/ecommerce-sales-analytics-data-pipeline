@@ -1,0 +1,510 @@
+{
+  "datasets": [
+    {
+      "name": "edddcef5",
+      "displayName": "dq_quarantine_summary",
+      "queryLines": [
+        "SELECT\r\n",
+        "  'customers' AS data_type,\r\n",
+        "  COUNT(*) AS invalid_record_count\r\n",
+        "FROM ecommerce.silver.quarantine_customers\r\n",
+        "\r\n",
+        "UNION ALL\r\n",
+        "\r\n",
+        "SELECT\r\n",
+        "  'order_items' AS data_type,\r\n",
+        "  COUNT(*) AS invalid_record_count\r\n",
+        "FROM ecommerce.silver.quarantine_order_items;\r\n"
+      ]
+    },
+    {
+      "name": "889d8884",
+      "displayName": "daily_sales_performance",
+      "queryLines": [
+        "SELECT *\r\n",
+        "FROM ecommerce.gold.vw_daily_sales_performance\r\n",
+        "ORDER BY transaction_date;\r\n"
+      ]
+    },
+    {
+      "name": "c3957a26",
+      "displayName": "customer_value_summary(desc)",
+      "queryLines": [
+        "SELECT\r\n",
+        "  customer_id,\r\n",
+        "  total_transactions,\r\n",
+        "  lifetime_value_inr\r\n",
+        "FROM ecommerce.gold.vw_customer_value_summary\r\n",
+        "ORDER BY lifetime_value_inr DESC\r\n",
+        "LIMIT 5;\r\n"
+      ]
+    },
+    {
+      "name": "7e7bb1fd",
+      "displayName": "channel_performance",
+      "queryLines": [
+        "SELECT *\r\n",
+        "FROM ecommerce.gold.vw_channel_performance;"
+      ]
+    },
+    {
+      "name": "b47e537a",
+      "displayName": "discount_impact",
+      "queryLines": [
+        "SELECT *\r\n",
+        "FROM ecommerce.gold.vw_discount_impact;\r\n"
+      ]
+    },
+    {
+      "name": "efce25d3",
+      "displayName": "vw_customer_value_summary",
+      "queryLines": [
+        "SELECT * FROM ecommerce.gold.vw_customer_value_summary"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "b8603164",
+      "displayName": "Overview",
+      "layout": [
+        {
+          "widget": {
+            "name": "00b723fe",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "b47e537a",
+                  "fields": [
+                    {
+                      "name": "coupon_flag",
+                      "expression": "`coupon_flag`"
+                    },
+                    {
+                      "name": "sum(net_revenue_inr)",
+                      "expression": "SUM(`net_revenue_inr`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "coupon_flag",
+                  "displayName": "Coupon Flag",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(net_revenue_inr)",
+                  "displayName": "Net Revenue",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "headerAlignment": "center",
+                "title": "Net Revenue: Coupon vs Non-Coupon Orders"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 8,
+            "width": 3,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "e90f7d07",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "889d8884",
+                  "fields": [
+                    {
+                      "name": "monthly(transaction_date)",
+                      "expression": "DATE_TRUNC(\"MONTH\", `transaction_date`)"
+                    },
+                    {
+                      "name": "sum(total_revenue_inr)",
+                      "expression": "SUM(`total_revenue_inr`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "monthly(transaction_date)",
+                  "displayName": "Transaction Date",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(total_revenue_inr)",
+                  "displayName": "Total Revenue",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "headerAlignment": "center",
+                "title": "Monthly Net Revenue Trend"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 3,
+            "width": 3,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "16faa761",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "7e7bb1fd",
+                  "fields": [
+                    {
+                      "name": "channel",
+                      "expression": "`channel`"
+                    },
+                    {
+                      "name": "sum(total_revenue_inr)",
+                      "expression": "SUM(`total_revenue_inr`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "channel",
+                  "displayName": "Channel",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(total_revenue_inr)",
+                  "displayName": "Total Revenue ",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "headerAlignment": "center",
+                "title": "Net Revenue by Sales Channel"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 8,
+            "width": 3,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "c4a2bd76",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "c3957a26",
+                  "fields": [
+                    {
+                      "name": "customer_id",
+                      "expression": "`customer_id`"
+                    },
+                    {
+                      "name": "total_transactions",
+                      "expression": "`total_transactions`"
+                    },
+                    {
+                      "name": "lifetime_value_inr",
+                      "expression": "`lifetime_value_inr`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 1,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "customer_id",
+                    "booleanValues": [
+                      "false",
+                      "true"
+                    ],
+                    "imageUrlTemplate": "{{ @ }}",
+                    "imageTitleTemplate": "{{ @ }}",
+                    "imageWidth": "",
+                    "imageHeight": "",
+                    "linkUrlTemplate": "{{ @ }}",
+                    "linkTextTemplate": "{{ @ }}",
+                    "linkTitleTemplate": "{{ @ }}",
+                    "linkOpenInNewTab": true,
+                    "type": "string",
+                    "displayAs": "string",
+                    "visible": true,
+                    "order": 1,
+                    "title": "customer_id",
+                    "allowSearch": false,
+                    "alignContent": "left",
+                    "allowHTML": false,
+                    "highlightLinks": false,
+                    "useMonospaceFont": false,
+                    "preserveWhitespace": false
+                  },
+                  {
+                    "fieldName": "total_transactions",
+                    "numberFormat": "0",
+                    "booleanValues": [
+                      "false",
+                      "true"
+                    ],
+                    "imageUrlTemplate": "{{ @ }}",
+                    "imageTitleTemplate": "{{ @ }}",
+                    "imageWidth": "",
+                    "imageHeight": "",
+                    "linkUrlTemplate": "{{ @ }}",
+                    "linkTextTemplate": "{{ @ }}",
+                    "linkTitleTemplate": "{{ @ }}",
+                    "linkOpenInNewTab": true,
+                    "type": "integer",
+                    "displayAs": "number",
+                    "visible": true,
+                    "order": 2,
+                    "title": "total_transactions",
+                    "allowSearch": false,
+                    "alignContent": "right",
+                    "allowHTML": false,
+                    "highlightLinks": false,
+                    "useMonospaceFont": false,
+                    "preserveWhitespace": false
+                  },
+                  {
+                    "fieldName": "lifetime_value_inr",
+                    "numberFormat": "0",
+                    "booleanValues": [
+                      "false",
+                      "true"
+                    ],
+                    "imageUrlTemplate": "{{ @ }}",
+                    "imageTitleTemplate": "{{ @ }}",
+                    "imageWidth": "",
+                    "imageHeight": "",
+                    "linkUrlTemplate": "{{ @ }}",
+                    "linkTextTemplate": "{{ @ }}",
+                    "linkTitleTemplate": "{{ @ }}",
+                    "linkOpenInNewTab": true,
+                    "type": "integer",
+                    "displayAs": "number",
+                    "visible": true,
+                    "order": 3,
+                    "title": "lifetime_value_inr",
+                    "allowSearch": false,
+                    "alignContent": "right",
+                    "allowHTML": false,
+                    "highlightLinks": false,
+                    "useMonospaceFont": false,
+                    "preserveWhitespace": false,
+                    "cellFormat": {
+                      "default": {
+                        "foregroundColor": null
+                      },
+                      "rules": []
+                    }
+                  }
+                ]
+              },
+              "invisibleColumns": [],
+              "allowHTMLByDefault": false,
+              "itemsPerPage": 5,
+              "paginationSize": "default",
+              "condensed": true,
+              "withRowNumber": false,
+              "frame": {
+                "showTitle": true,
+                "title": "Top 5 Customers by Lifetime Value",
+                "headerAlignment": "center"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 3,
+            "width": 3,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "389311ed",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "efce25d3",
+                  "fields": [
+                    {
+                      "name": "sum(lifetime_value_inr)",
+                      "expression": "SUM(`lifetime_value_inr`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(lifetime_value_inr)"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Total Revenue (INR)",
+                "headerAlignment": "center"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "a303b017",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "efce25d3",
+                  "fields": [
+                    {
+                      "name": "sum(total_transactions)",
+                      "expression": "SUM(`total_transactions`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(total_transactions)"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Total Transactions",
+                "headerAlignment": "center"
+              }
+            }
+          },
+          "position": {
+            "x": 2,
+            "y": 0,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "c440e0c9",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "efce25d3",
+                  "fields": [
+                    {
+                      "name": "avg(avg_transaction_value)",
+                      "expression": "AVG(`avg_transaction_value`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "avg(avg_transaction_value)"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Average Transaction Value (INR)",
+                "headerAlignment": "center"
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 0,
+            "width": 2,
+            "height": 3
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    },
+    {
+      "name": "cd20f699",
+      "displayName": "Global Filters",
+      "pageType": "PAGE_TYPE_GLOBAL_FILTERS"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
