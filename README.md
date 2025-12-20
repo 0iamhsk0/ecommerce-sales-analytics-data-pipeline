@@ -9,7 +9,7 @@ This project implements an **end-to-end E-Commerce data analytics pipeline** usi
 In addition to the standard pipeline, the project includes:
 - Data quality validation and governance
 - Quarantine handling for invalid records
-- Incremental processing logic (job-ready design)
+- Incremental processing logic
 - Analytics-ready Gold views
 - Business-focused dashboards for validation and insights
 
@@ -18,18 +18,23 @@ In addition to the standard pipeline, the project includes:
 ---
 
 ## 🧱 Architecture Overview
-
 ```text
-Source Data
-   ↓
-Bronze Layer (Raw Ingestion)
-   ↓
-Silver Layer (Cleaned + Validated)
-   ↓
-Gold Layer (Analytics & Business Views)
-   ↓
-Dashboards (Insights & Validation)
+Source
+  ↓
+Bronze (Raw Delta)
+  ↓
+Silver (Cleansed Data)
+  ↓
+Silver – Data Quality Validation
+  ↓
+Silver – Quarantine / Rejected Records
+  ↓
+Gold (Facts, Dimensions, Views)
+  ↓
+Dashboards
 ```
+**Architecture Overview:**  
+This pipeline follows the **Databricks Medallion Architecture** (Bronze → Silver → Gold) and is extended with additional Silver-layer **data quality validation and quarantine handling** to reflect real-world data governance practices.
 
 ---
 
