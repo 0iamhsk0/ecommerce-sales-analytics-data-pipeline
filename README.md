@@ -6,7 +6,7 @@
 ## 📌 Project Overview
 This project implements an **end-to-end E-Commerce data analytics pipeline** using **Databricks** and **Delta Lake**, following the **Medallion Architecture (Bronze → Silver → Gold)**.
 
-In addition to the standard pipeline, the project includes:
+In addition to the standard pipeline, it also includes:
 - Data quality validation and governance
 - Quarantine handling for invalid records
 - Incremental processing logic
@@ -105,10 +105,6 @@ Although the dataset is static, the pipeline is designed to be **incremental-rea
 - Idempotent transformations
 - Re-runnable notebooks without duplication
 
-📌 **Design decision:**  
-Jobs and scheduled pipelines were intentionally not created, as the dataset does not change.  
-The pipeline is **job-ready** and can be scheduled if real-time or periodic data sources are introduced.
-
 ---
 
 ## 📊 Dashboards
@@ -170,12 +166,3 @@ ecommerce-sales-analytics-data-pipeline/
 - Designed **analytics-ready Gold views**
 - Built **business-facing dashboards**
 - Practiced **incremental & job-ready pipeline design**
-
----
-
-## 📌 Disclaimer
-This project uses a **static dataset** for learning and portfolio purposes.  
-Pipeline orchestration and scheduling were intentionally omitted to reflect **realistic engineering decisions**.
-
-
-
