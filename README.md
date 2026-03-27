@@ -131,7 +131,7 @@ Validate the original Medallion pipeline and Gold modeling.
 Demonstrate how data quality and governance improve business analytics.
 
 **Pic**
-![E-Commerce Data Quality & Analytics Validation Dashboard](dashboards/E-CommerceDataQuality&AnalyticsValidationDashboard.png)
+![E-Commerce Data Quality & Analytics Validation Dashboard](dashboards/E-Commerce%20Data%20Quality%20&%20Analytics%20Validation%20Dashboard.png)
 
 **Includes:**
 - KPI cards (Total Revenue, Total Transactions, Avg Transaction Value)
