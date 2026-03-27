@@ -114,7 +114,7 @@ Although the dataset is static, the pipeline is designed to be **incremental-rea
 Validate the original Medallion pipeline and Gold modeling.
 
 **Pic**
-![E-Commerce Medallion Pipeline - Core Analytics](/dashboards/E-Commerce Medallion Pipeline - Core Analytics.png)
+![E-Commerce Medallion Pipeline - Core Analytics](dashboards/E-CommerceMedallionPipeline-CoreAnalytics.png)
 
 **Key Insights:**
 - Monthly sales trend
@@ -131,7 +131,7 @@ Validate the original Medallion pipeline and Gold modeling.
 Demonstrate how data quality and governance improve business analytics.
 
 **Pic**
-![E-Commerce Data Quality & Analytics Validation Dashboard](/dashboards/E-Commerce Data Quality & Analytics Validation Dashboard.png)
+![E-Commerce Data Quality & Analytics Validation Dashboard](dashboards/E-CommerceDataQuality&AnalyticsValidationDashboard.png)
 
 **Includes:**
 - KPI cards (Total Revenue, Total Transactions, Avg Transaction Value)
