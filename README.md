@@ -114,7 +114,7 @@ Although the dataset is static, the pipeline is designed to be **incremental-rea
 Validate the original Medallion pipeline and Gold modeling.
 
 **Pic**
-![E-Commerce Medallion Pipeline - Core Analytics](dashboards/E-CommerceMedallionPipeline-CoreAnalytics.png)
+![E-Commerce Medallion Pipeline - Core Analytics](dashboards/E-Commerce%20Medallion%20Pipeline%20-%20Core%20Analytics.png)
 
 **Key Insights:**
 - Monthly sales trend
