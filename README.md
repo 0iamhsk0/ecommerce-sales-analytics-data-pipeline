@@ -9,7 +9,6 @@ This project implements an **end-to-end E-Commerce data analytics pipeline** usi
 In addition to the standard pipeline, it also includes:
 - Data quality validation and governance
 - Quarantine handling for invalid records
-- Incremental processing logic
 - Analytics-ready Gold views
 - Business-focused dashboards for validation and insights
 
@@ -99,14 +98,6 @@ Instead of duplicating tables, **analytics views** are created on top of Gold fa
 
 ---
 
-## 🔁 Incremental Processing Design
-Although the dataset is static, the pipeline is designed to be **incremental-ready**:
-- Metadata-based watermark logic
-- Idempotent transformations
-- Re-runnable notebooks without duplication
-
----
-
 ## 📊 Dashboards
 
 ### 1️⃣ Core Medallion Analytics Dashboard
@@ -153,6 +144,7 @@ ecommerce-sales-analytics-data-pipeline/
 ├── medallion_processing_fact/ # Fact table processing
 ├── data_quality/              # Validation & quarantine logic
 ├── dashboards/                # Dashboard-related assets
+├── ecomm-raw-data             # Contains the data folders
 ├── README.md
 ```
 ---
